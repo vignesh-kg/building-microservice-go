@@ -1,9 +1,9 @@
 package handler
 
 import (
+	"building-microservice-go/constants"
 	"building-microservice-go/structs"
 	"encoding/json"
-	"log"
 	"net/http"
 )
 
@@ -14,16 +14,13 @@ func NewHelloWorldHandler() http.Handler {
 }
 
 func (h HelloWorldHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
-	type validationContextKey string
-	log.Println(r.Context().Value(validationContextKey("name")))
-	value := r.Context().Value(validationContextKey("name"))
-  var request *structs.HelloWorldRequest
-  var ok bool
+	value := r.Context().Value(constants.RequestKey)
+	var request *structs.HelloWorldRequest
+	var ok bool
 	if request, ok = value.(*structs.HelloWorldRequest); !ok {
 		http.Error(rw, "Invalid request data", http.StatusBadRequest)
 		return
 	}
-	log.Println(request)
 	response := structs.HelloWorldResponse{Message: "Hello " + request.Name}
 
 	encoder := json.NewEncoder(rw)
