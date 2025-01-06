@@ -1,0 +1,8 @@
+package: api # The name of the generated Go package
+generate:
+  std-http-server: true
+  client: false # Generate client code
+  models: true # Generate data models
+output: api/server.gen.go
+output-options:
+  skip-prune: true
