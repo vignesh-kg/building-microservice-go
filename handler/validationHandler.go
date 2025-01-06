@@ -1,11 +1,12 @@
 package handler
 
 import (
+	"building-microservice-go/constants"
 	"building-microservice-go/structs"
 	"context"
 	"encoding/json"
 	"net/http"
-	"building-microservice-go/constants"
+	"strings"
 )
 
 type ValidationHandler struct {
@@ -26,7 +27,7 @@ func (h ValidationHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		http.Error(rw, "Bad request", http.StatusBadRequest)
 		return
 	}
-	if request.Name != "Vigz"{
+	if !strings.EqualFold(request.Name, "VIGZ"){
 		http.Error(rw, "Forbidden", http.StatusForbidden)
 		return
 	}
